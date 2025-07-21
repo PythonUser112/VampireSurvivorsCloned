@@ -24,7 +24,6 @@ var upgrade_names =    {UPGRADES.BASE_WEAPON: ["A new whip", "Stronger Player", 
 						UPGRADES.SPLASH_DAMAGE: ["Posionous potions", "Bigger splash", "Weakening posion"],
 						UPGRADES.GAME: ["Intelligent weapons", "More upgrades", "Full version!"]}
 var upgrades_done = [0, 0, 0, 0, 0, 0, 0]
-var full_version
 var loot_chance = 50
 
 var player_speed = 10
@@ -40,18 +39,7 @@ var potion_radius = 100
 
 func _ready():
 	randomize()
-	full_version = retreive_config()
-
-func retreive_config():
-	var file = File.new()
-	if not file.file_exists(save):
-		file.open(save, File.WRITE)
-		file.store_16(0)
-		return false
-	file.open(save, File.READ)
-	upgrades_done[UPGRADES.GAME] = file.get_16()
-	return upgrades_done[UPGRADES.GAME] >= 4
-
+	
 func initialize_upgrades():
 	upgrades_done = [0, 0, 0, 0, 0, 0, upgrades_done[UPGRADES.GAME]]
 
@@ -73,13 +61,12 @@ func get_label(upgrade):
 
 # warning-ignore:unused_argument
 func get_icon(upgrade):
-	if not full_version:
-		return null
+	pass
 
 func upgrade(upgrade):
 	upgrades_left -= 1
 	if upgrades_left == 0:
-		xp_max = 10000000000000000000
+		xp_max = 100000000
 	upgrades_done[upgrade] += 1
 	if upgrade == UPGRADES.GAME and upgrades_done[UPGRADES.GAME] >= 2:
 		upgrades_possible = 3

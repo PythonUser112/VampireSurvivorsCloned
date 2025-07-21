@@ -12,7 +12,7 @@ func _ready():
 		var cell_value = $GroundMap.get_cellv(cell)
 		if cell_value == 2:
 			var spawner = enemy_spawner.instance()
-			spawner.position = cell * $GroundMap.cell_size.x
+			spawner.position = cell * $GroundMap.cell_size.x + $GroundMap.cell_size / 2
 			spawner.enemy_container = $EnemyContainer
 			$EnemySpawners.add_child(spawner)
 	stimulate()
